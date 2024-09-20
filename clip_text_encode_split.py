@@ -1,6 +1,6 @@
 class RawText:
     @classmethod
-    def INPUT_TYPES(s):
+    def INPUT_TYPES(cls):
         return {"required": {"raw_text": ("STRING", {"multiline": True})}}
     
     RETURN_TYPES = ("RAW_TEXT",)
@@ -12,13 +12,12 @@ class RawText:
     
 class RawTextCLIPEncode:
     @classmethod
-    def INPUT_TYPES(s):
+    def INPUT_TYPES(cls):
         return {"required": {"raw_text": ("RAW_TEXT", ), 
                              "clip": ("CLIP", )
-                }}
+                    }}
     RETURN_TYPES = ("CONDITIONING",)
     FUNCTION = "encode"
-
     CATEGORY = "conditioning"
 
     def encode(self, clip, raw_text):
@@ -26,7 +25,7 @@ class RawTextCLIPEncode:
     
 class RawTextCombine:
     @classmethod
-    def INPUT_TYPES(s):
+    def INPUT_TYPES(cls):
         return {
             "required": {
                 "raw_text_1": ("RAW_TEXT", ), 
@@ -35,15 +34,14 @@ class RawTextCombine:
         }
     RETURN_TYPES = ("RAW_TEXT",)
     FUNCTION = "combine"
-
     CATEGORY = "utils"
 
     def combine(self, raw_text_1, raw_text_2):
         return (raw_text_1 + "," + raw_text_2, )
-
+    
 class StringEmptyCheck:
     @classmethod
-    def INPUT_TYPES(s):
+    def INPUT_TYPES(cls):
         return {"required": {"string": ("STRING", {"multiline": True})}}
     
     RETURN_TYPES = ("BOOLEAN",)
@@ -55,7 +53,7 @@ class StringEmptyCheck:
     
 class RawTextReplace:
     @classmethod
-    def INPUT_TYPES(s):
+    def INPUT_TYPES(cls):
         return {
             "required": {
                 "search": ("STRING", {}),
@@ -65,18 +63,7 @@ class RawTextReplace:
         }
     RETURN_TYPES = ("RAW_TEXT",)
     FUNCTION = "replace"
-
     CATEGORY = "utils"
 
     def replace(self, search, subject, replace):
         return (subject.replace(search, replace), )
-
-
-
-NODE_CLASS_MAPPINGS = {
-    "RawText": RawText,
-    "RawTextEncode": RawTextCLIPEncode,
-    "StringEmptyCheck": StringEmptyCheck,
-    "RawTextCombine": RawTextCombine,
-    "RawTextReplace": RawTextReplace
-}
